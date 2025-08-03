@@ -1,0 +1,39 @@
+# Apache-2.0
+# Inference config for 13B-class placeholder (downscaled defaults)
+
+model:
+  vocab_size: 32000
+  d_model: 512
+  n_layers: 4
+  n_heads: 8
+  n_kv_heads: 4
+  max_seq_len: 2048
+  rope_base: 10000.0
+  rope_ntk_factor: 1.0
+  rope_interpolation_factor: 1.0
+  rotary_pct: 1.0
+  mlp_ratio: 4.0
+  activation: swiglu
+  norm_eps: 1e-5
+  dropout: 0.0
+  tie_word_embeddings: true
+  use_swa: true
+  swa_window: 256
+  swa_global_every: 4
+  activation_checkpointing: false
+  init_std: 0.02
+
+infer:
+  ckpt_path: null
+  device: cpu
+  dtype: auto
+  quant: null         # awq | gptq | null
+  kv_cache_quant: none
+  max_seq_len: 2048
+  top_p: 0.95
+  top_k: 0
+  temperature: 0.8
+
+rag:
+  retriever: none
+  k: 4

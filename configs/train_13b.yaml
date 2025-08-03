@@ -1,0 +1,55 @@
+# Apache-2.0
+# 13B-style training config (default values illustrative, downscale for smoke)
+
+model:
+  vocab_size: 32000
+  d_model: 512         # NOTE: use small dims for smoke; scale up (e.g., 5120) for real 13B
+  n_layers: 4          # e.g., 40 for real 13B
+  n_heads: 8           # e.g., 40 for real 13B
+  n_kv_heads: 4        # GQA (e.g., 8 for real 13B)
+  max_seq_len: 512     # e.g., 4096+
+  rope_base: 10000.0
+  rope_ntk_factor: 1.0
+  rope_interpolation_factor: 1.0
+  rotary_pct: 1.0
+  mlp_ratio: 4.0
+  activation: swiglu
+  norm_eps: 1e-5
+  dropout: 0.0
+  tie_word_embeddings: true
+  use_swa: true
+  swa_window: 256
+  swa_global_every: 4
+  activation_checkpointing: false
+  init_std: 0.02
+
+train:
+  output_dir: checkpoints
+  save_every_steps: 10
+  log_every_steps: 5
+  lr: 0.0003
+  weight_decay: 0.1
+  betas: [0.9, 0.95]
+  eps: 1.0e-8
+  warmup_steps: 5
+  max_steps: 20
+  min_lr: 3.0e-5
+  scheduler: cosine
+  z_loss: 0.0
+  batch_size: 2
+  grad_accum_steps: 2
+  seq_len: 512
+  vocab_size: 32000
+  precision: bf16
+  grad_clip: 1.0
+  device: cpu            # set to "cuda" under ROCm-enabled PyTorch
+  seed: 42
+  deterministic: true
+  dataset_type: synthetic
+  num_workers: 0
+  pack_documents: false
+  language_sampling: false
+
+rag:
+  retriever: none
+  k: 4

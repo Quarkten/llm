@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "glm45-rocm-scaffold"
+version = "0.1.0"
+description = "Minimal GLM-4.5-class LLM scaffold with ROCm-ready training and inference stubs"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.9"
+authors = [
+  { name = "Your Name", email = "you@example.com" }
+]
+
+# Notes for ROCm on Linux/WSL:
+# - Install PyTorch with ROCm wheels following https://pytorch.org/get-started/locally/
+#   e.g., for ROCm 6.0:
+#   pip install --index-url https://download.pytorch.org/whl/rocm6.0 torch torchvision torchaudio
+# On Windows, ROCm training is recommended via WSL2. CPU fallback also works for smoke tests.
+
+dependencies = [
+  "torch>=2.2.0",
+  "numpy>=1.23",
+  "pydantic>=2.5",
+  "pyyaml>=6.0.1",
+  "sentencepiece>=0.1.99",
+  "tqdm>=4.66.0",
+  "fastapi>=0.110.0",
+  "uvicorn[standard]>=0.27.0",
+  "requests>=2.31.0",
+  # Optional:
+  "uvloop; platform_system == 'Linux'",
+]
+
+[project.optional-dependencies]
+dev = [
+  "ruff",
+  "mypy",
+  "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+strict_optional = false

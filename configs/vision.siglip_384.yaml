@@ -1,0 +1,12 @@
+# SigLIP SO400M patch14-384 configuration (Windows-only)
+onnx_path: "checkpoints/onnx/siglip/siglip_so400m_patch14_384_fp16.onnx"
+
+preprocess:
+  image_size: 384
+  mean: [0.5, 0.5, 0.5]
+  std:  [0.5, 0.5, 0.5]
+  interpolation: "bicubic"
+
+runtime:
+  provider: "DmlExecutionProvider"
+  graph_optimization: "ORT_ENABLE_ALL"

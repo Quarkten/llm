@@ -1,0 +1,18 @@
+# Qwen2.5-7B-Instruct model configuration (Windows-only paths)
+tokenizer_path: "Qwen/Qwen2.5-7B-Instruct"
+
+mlc:
+  artifact_dir: "checkpoints/mlc/qwen2_7b_awq4"
+  micro_batch: 1
+
+onnx_dml:
+  model_dir: "checkpoints/onnx/qwen2_7b"  # expects decoder.onnx / decoder_with_past.onnx
+
+llama_vulkan:
+  gguf_path: "checkpoints/gguf/qwen2_7b/Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+  n_ctx: 4096
+  n_gpu_layers: -1
+  quant_preset: "Q4_K_M"
+
+cpu:
+  gguf_path: "checkpoints/gguf/qwen2_7b/Qwen2.5-7B-Instruct-Q4_K_M.gguf"

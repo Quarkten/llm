@@ -1,0 +1,37 @@
+# Windows-only runtime configuration
+# Enable/disable backends and set priority for selection.
+backends:
+  priority: ["mlc", "onnx_dml", "llama_vulkan", "cpu"]
+  mlc:
+    enabled: true
+    artifact_dir: "checkpoints/mlc/qwen2_7b_awq4"
+    micro_batch: 1
+  onnx_dml:
+    enabled: true
+    model_dir: "checkpoints/onnx/qwen2_7b"
+  llama_vulkan:
+    enabled: true
+    gguf_path: "checkpoints/gguf/qwen2_7b/Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+    n_ctx: 4096
+    n_gpu_layers: -1
+    quant_preset: "Q4_K_M"
+  cpu:
+    enabled: true
+    gguf_path: "checkpoints/gguf/qwen2_7b/Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+
+env:
+  # ONNX Runtime tuner / profiling
+  ORT_TUNER_ENABLE: "0"
+  ORT_TUNER_LOAD: ""
+  ORT_TUNER_SAVE: "logs/tuner/qwen2_7b_tuner.json"
+  ORT_DML_DISABLE_FP16: "0"
+  ORT_CPU_FALLBACK: "1"
+  ORT_NUM_THREADS: "8"
+
+  # CPU threading and affinity (for fallback)
+  OMP_NUM_THREADS: "8"
+  KMP_AFFINITY: "granularity=fine,compact,1,0"
+
+paths:
+  logs_root: "logs/runs"
+  profiles_root: "logs/profiles"
